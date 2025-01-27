@@ -66,7 +66,9 @@
   <script>
     function loadBag() {
       const bagContainer = document.getElementById('bag-container');
-      const bag = JSON.parse(localStorage.getItem('bag')) || [];
+      let bag = JSON.parse(localStorage.getItem('bag')) || [];
+
+      bagContainer.innerHTML = ''; // Leere das Container-Element, bevor es neu geladen wird
 
       if (bag.length === 0) {
         bagContainer.innerHTML = '<p>Your bag is empty.</p>';
@@ -83,17 +85,20 @@
           <button data-index="${index}">Remove</button>
         `;
 
+        // Entfernen-Button
         const removeButton = bagItem.querySelector('button');
         removeButton.addEventListener('click', () => {
-          bag.splice(index, 1);
-          localStorage.setItem('bag', JSON.stringify(bag));
-          loadBag();
+          // Entferne das Produkt an der richtigen Stelle im Array
+          bag = bag.filter((_, i) => i !== index);
+          localStorage.setItem('bag', JSON.stringify(bag)); // Speichere das aktualisierte Array
+          loadBag(); // Aktualisiere die Ansicht
         });
 
         bagContainer.appendChild(bagItem);
       });
     }
 
+    // Initiales Laden des Warenkorbs
     loadBag();
   </script>
 </body>
