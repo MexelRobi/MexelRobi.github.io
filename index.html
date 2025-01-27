@@ -1,1 +1,76 @@
-Hello World!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .store {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .product img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .product h2 {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    .product p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .product .price {
+      font-size: 1rem;
+      color: #333;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Store</h1>
+  <div class="store" id="store"></div>
+
+  <script>
+    async function loadProducts() {
+      try {
+        const response = await fetch('products.json');
+        const products = await response.json();
+        const store = document.getElementById('store');
+
+        products.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.classList.add('product');
+
+          productCard.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <div class="price">$${product.price.toFixed(2)}</div>
+          `;
+
+          store.appendChild(productCard);
+        });
+      } catch (error) {
+        console.error('Error loading products:', error);
+      }
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>
