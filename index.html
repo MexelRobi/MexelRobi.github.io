@@ -100,7 +100,6 @@
         button.addEventListener('click', () => {
           bag.push(product);
           localStorage.setItem('bag', JSON.stringify(bag));
-          alert(`${product.name} has been added to the bag.`);
         });
 
         store.appendChild(productCard);
