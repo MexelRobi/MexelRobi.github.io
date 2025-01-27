@@ -39,13 +39,69 @@
       font-weight: bold;
       margin: 10px 0;
     }
+    .product button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .product button:hover {
+      background-color: #218838;
+    }
+    .bag {
+      margin-top: 20px;
+    }
+    .bag ul {
+      list-style: none;
+      padding: 0;
+    }
+    .bag li {
+      margin: 10px 0;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
   <h1>Welcome to the Store</h1>
   <div class="store" id="store"></div>
 
+  <h2>Your Bag</h2>
+  <div class="bag" id="bag">
+    <ul id="bag-items"></ul>
+  </div>
+
   <script>
+    // Initialisiere den Warenkorb aus dem lokalen Speicher
+    const bag = JSON.parse(localStorage.getItem('bag')) || [];
+
+    // Aktualisiere den Warenkorb in der UI
+    function updateBagUI() {
+      const bagItems = document.getElementById('bag-items');
+      bagItems.innerHTML = '';
+
+      if (bag.length === 0) {
+        bagItems.innerHTML = '<li>Your bag is empty.</li>';
+        return;
+      }
+
+      bag.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+        bagItems.appendChild(listItem);
+      });
+    }
+
+    // Produkt zum Warenkorb hinzufügen
+    function addToBag(product) {
+      bag.push(product);
+      localStorage.setItem('bag', JSON.stringify(bag)); // Speichere den Warenkorb im lokalen Speicher
+      updateBagUI();
+    }
+
+    // Produkte laden und anzeigen
     async function loadProducts() {
       try {
         const response = await fetch('products.json');
@@ -61,7 +117,11 @@
             <h2>${product.name}</h2>
             <p>${product.description}</p>
             <div class="price">$${product.price.toFixed(2)}</div>
+            <button>Add to Bag</button>
           `;
+
+          const addButton = productCard.querySelector('button');
+          addButton.addEventListener('click', () => addToBag(product));
 
           store.appendChild(productCard);
         });
@@ -70,7 +130,9 @@
       }
     }
 
+    // Seite initialisieren
     loadProducts();
+    updateBagUI();
   </script>
 </body>
 </html>
