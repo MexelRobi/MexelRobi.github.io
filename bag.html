@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bag</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    header a {
+      text-decoration: none;
+      color: white;
+      background-color: #007bff;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+    header a:hover {
+      background-color: #0056b3;
+    }
+    .bag-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .bag-item h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .bag-item .price {
+      color: #333;
+      font-weight: bold;
+    }
+    .bag-item button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .bag-item button:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Your Bag</h1>
+    <a href="store.html">Back to Store</a>
+  </header>
+  <div id="bag-container"></div>
+
+  <script>
+    function loadBag() {
+      const bagContainer = document.getElementById('bag-container');
+      const bag = JSON.parse(localStorage.getItem('bag')) || [];
+
+      if (bag.length === 0) {
+        bagContainer.innerHTML = '<p>Your bag is empty.</p>';
+        return;
+      }
+
+      bag.forEach((item, index) => {
+        const bagItem = document.createElement('div');
+        bagItem.classList.add('bag-item');
+
+        bagItem.innerHTML = `
+          <h2>${item.name}</h2>
+          <div class="price">$${item.price.toFixed(2)}</div>
+          <button data-index="${index}">Remove</button>
+        `;
+
+        const removeButton = bagItem.querySelector('button');
+        removeButton.addEventListener('click', () => {
+          bag.splice(index, 1);
+          localStorage.setItem('bag', JSON.stringify(bag));
+          loadBag();
+        });
+
+        bagContainer.appendChild(bagItem);
+      });
+    }
+
+    loadBag();
+  </script>
+</body>
+</html>
