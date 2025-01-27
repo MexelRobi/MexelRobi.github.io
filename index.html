@@ -3,11 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Store</title>
+  <title>Store</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    header a {
+      text-decoration: none;
+      color: white;
+      background-color: #007bff;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+    header a:hover {
+      background-color: #0056b3;
     }
     .store {
       display: grid;
@@ -51,88 +67,47 @@
     .product button:hover {
       background-color: #218838;
     }
-    .bag {
-      margin-top: 20px;
-    }
-    .bag ul {
-      list-style: none;
-      padding: 0;
-    }
-    .bag li {
-      margin: 10px 0;
-      font-size: 1rem;
-    }
   </style>
 </head>
 <body>
-  <h1>Welcome to the Store</h1>
+  <header>
+    <h1>Store</h1>
+    <a href="bag.html">View Bag</a>
+  </header>
   <div class="store" id="store"></div>
 
-  <h2>Your Bag</h2>
-  <div class="bag" id="bag">
-    <ul id="bag-items"></ul>
-  </div>
-
   <script>
-    // Initialisiere den Warenkorb aus dem lokalen Speicher
-    const bag = JSON.parse(localStorage.getItem('bag')) || [];
+    async function loadProducts() {
+      const response = await fetch('products.json');
+      const products = await response.json();
+      const store = document.getElementById('store');
 
-    // Aktualisiere den Warenkorb in der UI
-    function updateBagUI() {
-      const bagItems = document.getElementById('bag-items');
-      bagItems.innerHTML = '';
+      const bag = JSON.parse(localStorage.getItem('bag')) || [];
 
-      if (bag.length === 0) {
-        bagItems.innerHTML = '<li>Your bag is empty.</li>';
-        return;
-      }
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product');
 
-      bag.forEach(item => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
-        bagItems.appendChild(listItem);
+        productCard.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p>${product.description}</p>
+          <div class="price">$${product.price.toFixed(2)}</div>
+          <button>Add to Bag</button>
+        `;
+
+        const button = productCard.querySelector('button');
+        button.addEventListener('click', () => {
+          bag.push(product);
+          localStorage.setItem('bag', JSON.stringify(bag));
+          alert(`${product.name} has been added to the bag.`);
+        });
+
+        store.appendChild(productCard);
       });
     }
 
-    // Produkt zum Warenkorb hinzufügen
-    function addToBag(product) {
-      bag.push(product);
-      localStorage.setItem('bag', JSON.stringify(bag)); // Speichere den Warenkorb im lokalen Speicher
-      updateBagUI();
-    }
-
-    // Produkte laden und anzeigen
-    async function loadProducts() {
-      try {
-        const response = await fetch('products.json');
-        const products = await response.json();
-        const store = document.getElementById('store');
-
-        products.forEach(product => {
-          const productCard = document.createElement('div');
-          productCard.classList.add('product');
-
-          productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <h2>${product.name}</h2>
-            <p>${product.description}</p>
-            <div class="price">$${product.price.toFixed(2)}</div>
-            <button>Add to Bag</button>
-          `;
-
-          const addButton = productCard.querySelector('button');
-          addButton.addEventListener('click', () => addToBag(product));
-
-          store.appendChild(productCard);
-        });
-      } catch (error) {
-        console.error('Error loading products:', error);
-      }
-    }
-
-    // Seite initialisieren
     loadProducts();
-    updateBagUI();
   </script>
 </body>
 </html>
