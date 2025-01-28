@@ -26,5 +26,12 @@
     "description": "Eine tolle Dekoration als kleiner mini Weihnachtsbaum.",
     "price": 5.00,
     "image": "https://mexelrobi.github.io/Image_id4_Weihnachtsbaum.png"
+  },
+  {
+    "id": 5,
+    "name": "Glas Marker Set",
+    "description": "Super um die Gläser am Tisch zu unterscheiden.",
+    "price": 3.00,
+    "image": "https://mexelrobi.github.io/Image_id5_glassmarkers.jpeg"
   }
 ]
