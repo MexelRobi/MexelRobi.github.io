@@ -8,10 +8,10 @@
   },
   {
     "id": 2,
-    "name": "Product 2",
-    "description": "This is the description of Product 2.",
-    "price": 29.99,
-    "image": "https://via.placeholder.com/150"
+    "name": "Handy Halterung",
+    "description": "Eine Halterung für dein Handy.",
+    "price": 7.00,
+    "image": "https://mexelrobi.github.io/Image_id2_Handy_Halterung.jpeg"
   },
   {
     "id": 3,
