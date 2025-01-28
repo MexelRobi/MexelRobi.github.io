@@ -19,5 +19,12 @@
     "description": "Eine tolle Vase mit Spiralmuster.",
     "price": 10.00,
     "image": "https://mexelrobi.github.io/noimage.png"
+  },
+  {
+    "id": 4,
+    "name": "Weihnachtsbaum",
+    "description": "Eine tolle Dekoration als kleiner mini Weihnachtsbaum.",
+    "price": 5.00,
+    "image": "https://mexelrobi.github.io/Image_id4_Weihnachtsbaum.png"
   }
 ]
