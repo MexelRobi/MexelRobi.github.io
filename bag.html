@@ -62,6 +62,7 @@
     <a href="index.html">Back to Store</a>
   </header>
   <div id="bag-container"></div>
+  <button id="submitBag">Submit Bag</button>
 
   <script>
     function loadBag() {
@@ -100,6 +101,30 @@
 
     // Initiales Laden des Warenkorbs
     loadBag();
+
+    // Wenn der Benutzer auf den Submit-Button klickt, erstellen wir die vorab ausgefüllte URL
+    document.getElementById('submitBag').addEventListener('click', () => {
+      let bag = JSON.parse(localStorage.getItem('bag')) || [];
+      const bagData = JSON.stringify(bag); // Hier nehmen wir das gesamte Warenkorb-JSON
+
+      // Vorab ausgefüllte URL mit den Warenkorb-Daten
+      const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScQTaZ_doupwCAm9aRdlymxUniNq3QsfEgThwaex06SgpJtKg/viewform?usp=pp_url&entry.1779938526=${encodeURIComponent(bagData)}`;
+
+      // Öffne das Google Form im neuen Tab als Popup
+      const popup = window.open(formUrl, '_blank', 'width=800,height=600');
+
+      // Stelle sicher, dass das Popup Fenster geladen ist und führe den Klick auf „Next“ aus
+      const checkPopupLoaded = setInterval(() => {
+        if (popup && popup.document) {
+          // Wenn das Popup geladen ist, versuche den "Next"-Button zu klicken
+          const nextButton = popup.document.querySelector('div[role="button"][aria-label="Next"]');
+          if (nextButton) {
+            nextButton.click(); // Simuliere einen Klick auf den "Next"-Button
+            clearInterval(checkPopupLoaded); // Stoppe die Überprüfung
+          }
+        }
+      }, 100); // Überprüfe alle 100ms, ob der Button verfügbar ist
+    });
   </script>
 </body>
 </html>
