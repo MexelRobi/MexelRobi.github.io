@@ -15,9 +15,9 @@
   },
   {
     "id": 3,
-    "name": "Product 3",
-    "description": "This is the description of Product 3.",
-    "price": 39.99,
-    "image": "https://via.placeholder.com/150"
+    "name": "Spiralvase",
+    "description": "Eine tolle Vase mit Spiralmuster.",
+    "price": 10.00,
+    "image": "https://mexelrobi.github.io/noimage.png"
   }
 ]
