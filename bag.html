@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bag</title>
+  <title>Your Bag</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,6 +21,7 @@
       background-color: #007bff;
       padding: 10px 15px;
       border-radius: 5px;
+      font-size: 16px;
     }
     header a:hover {
       background-color: #0056b3;
@@ -47,12 +48,25 @@
       background-color: #dc3545;
       color: white;
       border: none;
-      padding: 5px 10px;
+      padding: 8px 16px;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 14px;
     }
     .bag-item button:hover {
       background-color: #c82333;
+    }
+    #submitBag {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 5px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+    }
+    #submitBag:hover {
+      background-color: #218838;
     }
   </style>
 </head>
@@ -113,14 +127,14 @@
       // Öffne das Google Form im neuen Tab als Popup
       const popup = window.open(formUrl, '_blank', 'width=800,height=600');
 
-      // Stelle sicher, dass das Popup Fenster geladen ist und führe den Klick auf „Next“ aus
+      // Stelle sicher, dass das Popup Fenster geladen ist und führe den Klick auf das gewünschte Element aus
       const checkPopupLoaded = setInterval(() => {
         if (popup && popup.document) {
-          // Wenn das Popup geladen ist, versuche den "Next"-Button zu klicken
-          const nextButton = popup.document.querySelector('div[role="button"][aria-label="Next"]');
+          // Hier suchen wir nach dem Element mit der bestimmten Klasse (z.B. "freebirdFormviewerViewNavigationNext")
+          const nextButton = popup.document.querySelector('.freebirdFormviewerViewNavigationNext');
           if (nextButton) {
             nextButton.click(); // Simuliere einen Klick auf den "Next"-Button
-            clearInterval(checkPopupLoaded); // Stoppe die Überprüfung
+            clearInterval(checkPopupLoaded); // Stoppe die Überprüfung, nachdem der Klick einmal ausgeführt wurde
           }
         }
       }, 100); // Überprüfe alle 100ms, ob der Button verfügbar ist
