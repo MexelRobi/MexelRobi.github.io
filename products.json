@@ -53,7 +53,7 @@
     "name": "Kleiner Kürbis",
     "description": "Mini Kürbis.",
     "price": 1.00,
-    "image": "https://mexelrobi.github.io/noimage.png"
+    "image": "https://mexelrobi.github.io/Image_id8_Kleiner_Kuerbis.png"
   },
   {
     "id": 9,
@@ -67,14 +67,14 @@
     "name": "Schnecke",
     "description": "Eine Schnecke mit beweglichen Zwischenstücken. Man kann sie sich auf das Regal, den Schreibtisch oder den Nachttisch stellen.",
     "price": 5.00,
-    "image": "https://mexelrobi.github.io/noimage.png"
+    "image": "https://mexelrobi.github.io/Image_id10_Schnecke.png"
   },
   {
     "id": 11,
     "name": "Mittelfinger Keksausstecher",
     "description": "Ein kleiner fieser Keksausstecher in Form eines Mittelfingers",
     "price": 3.00,
-    "image": "https://mexelrobi.github.io/noimage.png"
+    "image": "https://mexelrobi.github.io/Image_id11_Mittelfinger_Keksausstecher.png"
   },
   {
     "id": 12,
