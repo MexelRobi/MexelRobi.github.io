@@ -54,5 +54,40 @@
     "description": "Mini Kürbis.",
     "price": 1.00,
     "image": "https://mexelrobi.github.io/noimage.png"
+  },
+  {
+    "id": 9,
+    "name": "Katze",
+    "description": "Eine tolle Katze.",
+    "price": 5.00,
+    "image": "https://mexelrobi.github.io/noimage.png"
+  },
+  {
+    "id": 10,
+    "name": "Schnecke",
+    "description": "Eine Schnecke mit beweglichen Zwischenstücken. Man kann sie sich auf das Regal, den Schreibtisch oder den Nachttisch stellen.",
+    "price": 5.00,
+    "image": "https://mexelrobi.github.io/noimage.png"
+  },
+  {
+    "id": 11,
+    "name": "Mittelfinger Keksausstecher",
+    "description": "Ein kleiner fieser Keksausstecher in Form eines Mittelfingers",
+    "price": 3.00,
+    "image": "https://mexelrobi.github.io/noimage.png"
+  },
+  {
+    "id": 12,
+    "name": "Spinne",
+    "description": "Eine kleine schwarze Spinne aus Plastik.super zum Leute erschrecken.",
+    "price": 0.50,
+    "image": "https://mexelrobi.github.io/noimage.png"
+  },
+  {
+    "id": 13,
+    "name": "Biene",
+    "description": "Eine kleine Biene man kann sie als Schlüsselanhänger nutzen",
+    "price": 0.50,
+    "image": "https://mexelrobi.github.io/noimage.png"
   }
 ]
