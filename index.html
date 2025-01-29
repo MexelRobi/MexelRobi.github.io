@@ -25,48 +25,6 @@
     header a:hover {
       background-color: #0056b3;
     }
-    .build-button {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: #800080;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      border: none;
-    }
-    .build-button:hover {
-      background-color: #660066;
-    }
-    .iframe-popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 50%;
-      height: 50%;
-      background: white;
-      border: 2px solid #ccc;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-    }
-    .iframe-popup iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .iframe-popup .close-btn {
-      position: absolute;
-      top: 5px;
-      right: 10px;
-      background: red;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
     .store {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -116,14 +74,6 @@
     <h1>Store</h1>
     <a href="bag.html">View Bag</a>
   </header>
-  
-  <button class="build-button" onclick="openBuildPopup()">Build</button>
-  
-  <div class="iframe-popup" id="buildPopup">
-    <button class="close-btn" onclick="closeBuildPopup()">X</button>
-    <iframe src="builder.html"></iframe>
-  </div>
-  
   <div class="store" id="store"></div>
 
   <script>
@@ -131,9 +81,9 @@
       const response = await fetch('products.json');
       const products = await response.json();
       const store = document.getElementById('store');
-      
+
       const bag = JSON.parse(localStorage.getItem('bag')) || [];
-      
+
       products.forEach(product => {
         const productCard = document.createElement('div');
         productCard.classList.add('product');
@@ -142,7 +92,7 @@
           <img src="${product.image}" alt="${product.name}">
           <h2>${product.name}</h2>
           <p>${product.description}</p>
-          <div class="price">${product.price.toFixed(2)}</div>
+          <div class="price">$${product.price.toFixed(2)}</div>
           <button>Add to Bag</button>
         `;
 
@@ -154,14 +104,6 @@
 
         store.appendChild(productCard);
       });
-    }
-
-    function openBuildPopup() {
-      document.getElementById('buildPopup').style.display = 'block';
-    }
-
-    function closeBuildPopup() {
-      document.getElementById('buildPopup').style.display = 'none';
     }
 
     loadProducts();
