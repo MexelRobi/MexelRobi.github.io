@@ -107,6 +107,23 @@
     }
 
     loadProducts();
+    productCard.classList.add('product');
+
+        productCard.innerHTML = `
+          <h2>"Custom"</h2>
+          <p>"Add a custom product to your bag."</p>
+          <button>Add to Bag</button>
+        `;
+
+        const button = productCard.querySelector('button');
+        button.addEventListener('click', () => {
+          let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+width=600,height=300,left=100,top=100`;
+
+open('builder.html', 'test', params);
+        });
+
+        store.appendChild(productCard);
   </script>
 </body>
 </html>
