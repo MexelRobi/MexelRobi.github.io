@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h2>Create Your Own Product</h2>
+  <textarea id="customDescription" placeholder="Describe your product..."></textarea>
+  <button onclick="addCustomProduct()">Add to Store</button>
+
+  <script>
+    function addCustomProduct() {
+      const description = document.getElementById('customDescription').value;
+      if (!description) {
+        alert('Please enter a description');
+        return;
+      }
+      
+      const base64Description = btoa(description);
+      const customProduct = {
+        id: 0,
+        name: "Erstellt mit Builder",
+        description: `productcode: ${base64Description}`,
+        image: "",
+        price: "Wird per Email entschieden"
+      };
+      
+      const bag = JSON.parse(localStorage.getItem('bag')) || [];
+      bag.push(customProduct);
+      localStorage.setItem('bag', JSON.stringify(bag));
+      alert('Custom product added to bag!');
+    }
+  </script>
+</body>
+</html>
