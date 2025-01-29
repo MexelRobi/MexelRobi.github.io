@@ -33,27 +33,41 @@
   <button onclick="addCustomProduct()">Add to Store</button>
 
   <script>
-    function addCustomProduct() {
-      const description = document.getElementById('customDescription').value;
-      if (!description) {
-        alert('Please enter a description');
-        return;
-      }
-      
-      const base64Description = btoa(description);
-      const customProduct = {
-        id: 0,
-        name: "Erstellt mit Builder",
-        description: "productcode: ${base64Description}",
-        price: "Wird per Email entschieden",
-        image: ""
-      };
-      
-      const bag = JSON.parse(localStorage.getItem('bag')) || [];
-      bag.push(customProduct);
-      localStorage.setItem('bag', JSON.stringify(bag));
-      alert('Custom product added to bag!');
-    }
+    function encodeBase64Unicode(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+function addCustomProduct() {
+  const description = document.getElementById('customDescription').value;
+  if (!description) {
+    alert('Please enter a description');
+    return;
+  }
+
+  const base64Description = encodeBase64Unicode(description);
+
+  let bag;
+  try {
+    bag = JSON.parse(localStorage.getItem('bag')) || [];
+  } catch (e) {
+    bag = [];
+  }
+
+  const newId = bag.length > 0 ? Math.max(...bag.map(p => p.id)) + 1 : 1;
+
+  const customProduct = {
+    id: newId,
+    name: "Erstellt mit Builder",
+    description: `productcode: ${base64Description}`,
+    price: "Wird per Email entschieden",
+    image: ""
+  };
+
+  bag.push(customProduct);
+  localStorage.setItem('bag', JSON.stringify(bag));
+  alert('Custom product added to bag!');
+}
+
   </script>
 </body>
 </html>
