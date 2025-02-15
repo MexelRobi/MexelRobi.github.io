@@ -1,1 +1,8 @@
 theme: minima  # Ersetze 'minima' durch das gewünschte Theme
+minima:
+  skin: classic
+  navigation:
+    - title: "Home"
+      url: "/"
+    - title: "Apps"
+      url: "/apps/"
