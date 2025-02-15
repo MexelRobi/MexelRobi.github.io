@@ -1,7 +1,7 @@
 theme: minima  # Ersetze 'minima' durch das gewünschte Theme
 minima:
   skin: classic
-  favicon: "https://mexelrobi.github.io/favicon.ico"
+  favicon: "favicon.ico"
   navigation:
     - title: "Home"
       url: "/"
