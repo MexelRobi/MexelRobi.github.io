@@ -1,6 +1,7 @@
 theme: minima  # Ersetze 'minima' durch das gewünschte Theme
 minima:
   skin: classic
+  favicon: "/favicon.ico"
   navigation:
     - title: "Home"
       url: "/"
