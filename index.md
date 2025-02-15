@@ -11,7 +11,7 @@ title: Home
 ## Tools
 Mit High-performance tools   
 MRPackageCreator ist eine App für Entwickler von macOS Apps   
-[Nachsehen](https://mexelrobi.github.io/MRPackageCreator)
+[Nachsehen](https://mexelrobi.github.io/MRPackageCreator/index.html)
 
 ---
 
