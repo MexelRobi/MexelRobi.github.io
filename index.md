@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Meine Seite
+title: Home
 ---
 
 # Willkommen auf meiner Seite!
-Das ist eine mit Jekyll generierte GitHub Pages-Website.
+
+Hier ist die Startseite mit allen wichtigen Infos.
 
