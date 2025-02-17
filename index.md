@@ -15,13 +15,6 @@ MRPackageCreator ist eine App für Entwickler von macOS Apps
 
 ---
 
-## Shop
-**Der MR3D-Store**
-
----
-
-## Online und als App
-[Onlineshop](https://mexelrobi.github.io/MR3D-Store)
 
 
 
