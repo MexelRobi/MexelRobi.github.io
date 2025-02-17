@@ -11,12 +11,7 @@ Hier findest du eine Übersicht von den MexelRobi Apps.
 ## 1. MRPackageCreator
 <img src="https://mexelrobi.github.io/MRPackageCreator/icon.png" alt="MRPackageCreator" style="vertical-align: middle; margin-right: 10px; width: 50px; height: 50px;">
 <b>Plattform:</b> macOS
-<a href="/MRPackageCreator" class="get-button" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Downloads</a>  
+<a href="/MRPackageCreator" style="display: inline-flex; align-items: center; justify-content: center; background-color: #007AFF; color: white; font-size: 16px; font-weight: 600; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: background-color 0.2s ease; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">Laden</a>
 
-
-## 2. MR3D-Store
-<img src="https://mexelrobi.github.io/MR3D-Store/icon.png" alt="Fitness Tracker Icon" style="vertical-align: middle; margin-right: 10px; width: 50px; height: 50px;">
-<b>Plattform:</b> iOS, Web
-<a href="/MR3D-Store" class="get-button" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Visit</a>  
 
 
