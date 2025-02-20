@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Plain Text Table Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            font-family: monospace;
+            margin-bottom: 10px;
+        }
+        pre {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Unicode Plain Text Table Generator</h1>
+    <p>Bearbeite die Tabelle (CSV-Format, Spalten getrennt mit Kommas) und klicke auf "Generieren".</p>
+    <textarea id="table-input">Item,Price
+,</textarea>
+    <button onclick="generateTable()">Generieren</button>
+    <h2>Erzeugte Tabelle:</h2>
+    <pre id="table-output"></pre>
+
+    <script>
+        function generateTable() {
+            const input = document.getElementById('table-input').value;
+
+            // CSV-Daten parsen
+            const rows = input.split('\n').map(row => row.split(','));
+
+            // Spaltenbreiten berechnen
+            const colWidths = rows[0].map((_, colIndex) =>
+                Math.max(...rows.map(row => (row[colIndex] || '').length))
+            );
+
+            // Unicode-Zeilen generieren
+            const topBorder = '┌' + colWidths.map(w => '─'.repeat(w)).join('┬') + '┐';
+            const middleBorder = '├' + colWidths.map(w => '─'.repeat(w)).join('┼') + '┤';
+            const bottomBorder = '└' + colWidths.map(w => '─'.repeat(w)).join('┴') + '┘';
+
+            const formattedRows = rows.map((row, index) =>
+                '│' + row.map((cell, i) => String(cell || '').padEnd(colWidths[i])).join('│') + '│'
+            );
+
+            // Tabelle zusammenstellen
+            let table = [topBorder, formattedRows[0], middleBorder, ...formattedRows.slice(1), bottomBorder];
+            if (rows.length === 1) {
+                table = [topBorder, formattedRows[0], bottomBorder]; // Keine Mittellinie bei nur einer Zeile
+            }
+
+            // Ausgabe
+            document.getElementById('table-output').textContent = table.join('\n');
+        }
+
+        // Initiale Tabelle generieren
+        generateTable();
+    </script>
+</body>
+</html>
