@@ -26,33 +26,39 @@
 
     <h1>Pay with Cash</h1>
 
-    <p id="loading">Loading file...</p>
+    <p id="loading">Lade Datei...</p>
 
     <div id="fileContent"></div>
 
     <script>
         const url = 'https://api.github.com/repos/MexelRobi/MexelRobi.github.io/contents/api/mr3d/paywithcash/data.txt';
 
-        fetch(url, {
-            headers: {
-                'Accept': 'application/vnd.github.v3+json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.content) {
-                // Base64 dekodieren
-                const decodedContent = atob(data.content);
-                
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('fileContent').textContent = decodedContent;
-            } else {
-                document.getElementById('loading').textContent = 'No content available.';
-            }
-        })
-        .catch(error => {
-            document.getElementById('loading').textContent = 'API request error.';
-        });
+        function fetchFile() {
+            fetch(url, {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.content) {
+                    // Base64 dekodieren
+                    const decodedContent = atob(data.content);
+                    
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('fileContent').textContent = decodedContent;
+                } else {
+                    document.getElementById('loading').textContent = 'Kein Inhalt verfügbar.';
+                }
+            })
+            .catch(error => {
+                document.getElementById('loading').textContent = 'Fehler bei der API-Anfrage.';
+            });
+        }
+
+        // Datei sofort abrufen und dann alle 5 Sekunden aktualisieren
+        fetchFile();
+        setInterval(fetchFile, 1000);
     </script>
 
 </body>
