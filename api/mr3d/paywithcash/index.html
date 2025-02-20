@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Datei-Inhalt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #fileContent {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #loading {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>GitHub Datei-Inhalt anzeigen</h1>
+
+    <p id="loading">Lade Datei...</p>
+
+    <div id="fileContent"></div>
+
+    <script>
+        // Die URL der GitHub-API für den Dateizugriff
+        const url = 'https://api.github.com/repos/MexelRobi/Mexelrobi.github.io/contents/api/mr3d/paywithcash/data.txt';
+
+        // Fetch API verwenden, um die Datei anzufordern
+        fetch(url, {
+            headers: {
+                'Accept': 'application/vnd.github.v3.raw' // Raw-Dateiformat anfordern
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Wenn der Download-Link vorhanden ist, lade die Datei im Klartext
+            if (data.download_url) {
+                fetch(data.download_url)
+                    .then(response => response.text())
+                    .then(content => {
+                        // Zeige den Inhalt der Datei auf der Webseite an
+                        document.getElementById('loading').style.display = 'none';
+                        document.getElementById('fileContent').textContent = content;
+                    })
+                    .catch(error => {
+                        document.getElementById('loading').textContent = 'Fehler beim Laden der Datei.';
+                    });
+            } else {
+                document.getElementById('loading').textContent = 'Download-URL nicht verfügbar.';
+            }
+        })
+        .catch(error => {
+            document.getElementById('loading').textContent = 'Fehler bei der API-Anfrage.';
+        });
+    </script>
+
+</body>
+</html>
 
