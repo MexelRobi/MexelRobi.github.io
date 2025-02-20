@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Datei-Inhalt</title>
+    <title>Pay with Cash</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,45 +24,36 @@
 </head>
 <body>
 
-    <h1>GitHub Datei-Inhalt anzeigen</h1>
+    <h1>Pay with Cash</h1>
 
-    <p id="loading">Lade Datei...</p>
+    <p id="loading">Loading file...</p>
 
     <div id="fileContent"></div>
 
     <script>
-        // Die URL der GitHub-API für den Dateizugriff
-        const url = 'https://api.github.com/repos/MexelRobi/Mexelrobi.github.io/contents/api/mr3d/paywithcash/data.txt';
+        const url = 'https://api.github.com/repos/MexelRobi/MexelRobi.github.io/contents/api/mr3d/paywithcash/data.txt';
 
-        // Fetch API verwenden, um die Datei anzufordern
         fetch(url, {
             headers: {
-                'Accept': 'application/vnd.github.v3.raw' // Raw-Dateiformat anfordern
+                'Accept': 'application/vnd.github.v3+json'
             }
         })
         .then(response => response.json())
         .then(data => {
-            // Wenn der Download-Link vorhanden ist, lade die Datei im Klartext
-            if (data.download_url) {
-                fetch(data.download_url)
-                    .then(response => response.text())
-                    .then(content => {
-                        // Zeige den Inhalt der Datei auf der Webseite an
-                        document.getElementById('loading').style.display = 'none';
-                        document.getElementById('fileContent').textContent = content;
-                    })
-                    .catch(error => {
-                        document.getElementById('loading').textContent = 'Fehler beim Laden der Datei.';
-                    });
+            if (data.content) {
+                // Base64 dekodieren
+                const decodedContent = atob(data.content);
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('fileContent').textContent = decodedContent;
             } else {
-                document.getElementById('loading').textContent = 'Download-URL nicht verfügbar.';
+                document.getElementById('loading').textContent = 'No content available.';
             }
         })
         .catch(error => {
-            document.getElementById('loading').textContent = 'Fehler bei der API-Anfrage.';
+            document.getElementById('loading').textContent = 'API request error.';
         });
     </script>
 
 </body>
 </html>
-
