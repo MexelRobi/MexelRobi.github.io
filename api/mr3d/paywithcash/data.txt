@@ -1,2 +1,3 @@
 Welcome to MRTerminal Software
 Danke für den Einkauf
+close()
