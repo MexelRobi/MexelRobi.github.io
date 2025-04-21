@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download-Link Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      text-align: center;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+    }
+    .output {
+      margin-top: 20px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Download-Link Generator</h1>
+  <p>Gib deine echte Download-URL ein:</p>
+
+  <input id="urlInput" type="text" placeholder="https://example.com/datei.zip">
+
+  <button onclick="generate()">Generieren</button>
+
+  <div class="output" id="output" style="display:none;">
+    <h3>Fertiger Link:</h3>
+    <textarea id="generatedLink" rows="3" readonly></textarea>
+    <br>
+    <button onclick="copy()">Kopieren</button>
+  </div>
+
+  <script>
+    function generate() {
+      const input = document.getElementById('urlInput').value.trim();
+      if (!input.startsWith("http")) {
+        alert("Bitte eine gültige URL eingeben.");
+        return;
+      }
+      const compressed = LZString.compressToEncodedURIComponent(input);
+      const finalLink = `${window.location.origin}/download/${compressed}`;
+      document.getElementById('generatedLink').value = finalLink;
+      document.getElementById('output').style.display = 'block';
+    }
+
+    function copy() {
+      const textarea = document.getElementById('generatedLink');
+      textarea.select();
+      document.execCommand('copy');
+      alert("Link kop
