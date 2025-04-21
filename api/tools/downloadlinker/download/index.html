@@ -2,38 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Download Redirect</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+  <title>Datei wird geladen...</title>
+  <script src="/lz-string.min.js"></script>
 </head>
 <body>
   <script>
-    function getEncodedPart() {
-      const path = window.location.pathname;
-      const parts = path.split('/');
-      return parts.length > 2 ? parts[2] : null;
+    function base64UrlDecode(str) {
+      str = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (str.length % 4) str += '=';
+      return atob(str);
     }
 
-    function decodeAndRedirect() {
-      const encoded = getEncodedPart();
-      if (!encoded) {
-        document.body.innerText = "Kein gültiger Download-Code gefunden.";
-        return;
-      }
+    function downloadFile(name, content) {
+      const blob = new Blob([content]);
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function run() {
+      const path = window.location.pathname.split('/');
+      if (path.length < 3) return;
+
+      const encoded = path[2];
+      const filename = decodeURIComponent(window.location.hash.substring(1) || 'download.bin');
 
       try {
-        const decoded = LZString.decompressFromEncodedURIComponent(encoded);
-        if (!decoded || !decoded.startsWith('http')) {
-          throw new Error("Ungültige URL.");
-        }
-        window.location.href = decoded;
+        const decoded = base64UrlDecode(encoded);
+        const decompressed = LZString.decompressFromUTF16(decoded);
+        const bytes = new Uint8Array(decompressed.split('').map(c => c.charCodeAt(0)));
+        downloadFile(filename, bytes);
       } catch (e) {
-        document.body.innerText = "Fehler beim Dekodieren oder Weiterleiten.";
-        console.error(e);
+        console.error("Fehler beim Entpacken:", e);
+        document.body.innerText = "Fehler beim Download.";
       }
     }
 
-    decodeAndRedirect();
+    run();
   </script>
 </body>
 </html>
-
