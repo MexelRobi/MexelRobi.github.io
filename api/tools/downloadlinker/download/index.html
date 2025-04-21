@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Redirect</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+</head>
+<body>
+  <script>
+    function getEncodedPart() {
+      const path = window.location.pathname;
+      const parts = path.split('/');
+      return parts.length > 2 ? parts[2] : null;
+    }
+
+    function decodeAndRedirect() {
+      const encoded = getEncodedPart();
+      if (!encoded) {
+        document.body.innerText = "Kein gültiger Download-Code gefunden.";
+        return;
+      }
+
+      try {
+        const decoded = LZString.decompressFromEncodedURIComponent(encoded);
+        if (!decoded || !decoded.startsWith('http')) {
+          throw new Error("Ungültige URL.");
+        }
+        window.location.href = decoded;
+      } catch (e) {
+        document.body.innerText = "Fehler beim Dekodieren oder Weiterleiten.";
+        console.error(e);
+      }
+    }
+
+    decodeAndRedirect();
+  </script>
+</body>
+</html>
 
