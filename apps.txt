@@ -1,0 +1,19 @@
+pageTitle=Meine Apps – MexelRobi
+pageDescription=Hier findest du eine Übersicht von den MexelRobi Apps.
+
+appCount=3
+
+app1Name=MRPackageCreator
+app1Platform=macOS
+app1Icon=https://mexelrobi.github.io/MRPackageCreator/icon.png
+app1Url=https://mexelrobi.github.io/MRPackageCreator
+
+app2Name=WorkMonitoring
+app2Platform=macOS
+app2Icon=https://mexelrobi.github.io/assets/WorkMonitoring_icon.png
+app2Url=https://testflight.apple.com/join/ZY6QB7Bu
+
+app3Name=Pasterus
+app3Platform=macOS
+app3Icon=https://mexelrobi.github.io/Pasterus/icon.png
+app3Url=https://mexelrobi.github.io/Pasterus

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="pageTitle">MexelRobi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/x-icon" href="favicon.png" />
+  <style>
+    :root {
+      --color1-hue: 265;
+      --color2-hue: 180;
+    }
+
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      background-color: #152735;
+      background-image:
+        radial-gradient(at 47% 33%, hsl(var(--color1-hue), 78%, 28%) 0, transparent 59%),
+        radial-gradient(at 82% 65%, hsl(var(--color2-hue), 65%, 31%) 0, transparent 55%);
+      background-attachment: fixed;
+      transition: background-image 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .app-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 360px;
+      width: 100%;
+    }
+
+    .app-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      background: rgba(21,39,53,0.8);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      justify-content: flex-start;
+    }
+    .app-btn:hover {
+      background: rgba(21,39,53,1);
+      transform: scale(1.05);
+    }
+
+    .app-btn img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: contain;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="mainTitle">Lade …</h1>
+
+  <div class="app-buttons" id="appsContainer">
+    <!-- Buttons werden per JS aus loc.txt geladen -->
+  </div>
+
+  <script>
+    async function loadLoc() {
+      try {
+        const res = await fetch('loc.txt');
+        if (!res.ok) throw new Error('loc.txt konnte nicht geladen werden.');
+
+        const text = await res.text();
+        const lines = text.split('\n');
+        const data = {};
+        lines.forEach(line => {
+          const [key, ...rest] = line.split('=');
+          if (key && rest.length) {
+            data[key.trim()] = rest.join('=').trim();
+          }
+        });
+
+        // Titel setzen
+        if (data.pageTitle) {
+          document.title = data.pageTitle;
+          const el = document.getElementById('mainTitle');
+          if (el) el.textContent = data.pageTitle;
+        }
+
+        // Apps Buttons dynamisch bauen (appCount = Anzahl der Apps)
+        const appsContainer = document.getElementById('appsContainer');
+        const appCount = parseInt(data.appCount || '0');
+
+        for (let i = 1; i <= appCount; i++) {
+          const name = data[`app${i}Name`] || `App ${i}`;
+          const platform = data[`app${i}Platform`] || '';
+          const icon = data[`app${i}Icon`] || '';
+          const url = data[`app${i}Url`] || '#';
+
+          // Button erstellen
+          const a = document.createElement('a');
+          a.href = url;
+          a.className = 'app-btn';
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+
+          a.innerHTML = `
+            <img src="${icon}" alt="${name} Icon" />
+            <div>
+              ${name} <br/>
+              <small style="opacity:0.7;font-weight:400;">${platform}</small>
+            </div>
+          `;
+
+          appsContainer.appendChild(a);
+        }
+
+        // "Alle Apps ansehen"-Button hinzufügen
+        const allAppsUrl = data.allAppsUrl || '/alle-apps.html';
+
+        const allAppsBtn = document.createElement('a');
+        allAppsBtn.href = allAppsUrl;
+        allAppsBtn.className = 'app-btn';
+        allAppsBtn.style.justifyContent = 'center';
+        allAppsBtn.style.fontSize = '1.25rem';
+        allAppsBtn.style.padding = '18px 24px';
+        allAppsBtn.textContent = 'Alle Apps ansehen';
+
+        appsContainer.appendChild(allAppsBtn);
+
+      } catch (e) {
+        console.error(e);
+        document.getElementById('mainTitle').textContent = 'Fehler beim Laden der Daten.';
+      }
+    }
+
+    loadLoc();
+
+    // Hintergrund Farb-Animation
+    let scrollAmount = 0;
+    window.addEventListener('scroll', () => {
+      scrollAmount = Math.max(0, Math.min(100, window.scrollY / 10));
+    });
+
+    function animate(time = 0) {
+      const cycleDuration = 90000;
+      const progress = (time % cycleDuration) / cycleDuration;
+      const sinVal = Math.sin(progress * 2 * Math.PI);
+
+      const baseHue1 = 265;
+      const baseHue2 = 180;
+
+      const scrollHue1 = baseHue1 + (scrollAmount / 100) * 150;
+      const scrollHue2 = baseHue2 - (scrollAmount / 100) * 80;
+
+      const shimmerAmount = 5;
+
+      const finalHue1 = scrollHue1 + sinVal * shimmerAmount;
+      const finalHue2 = scrollHue2 + sinVal * shimmerAmount * 0.6;
+
+      document.documentElement.style.setProperty('--color1-hue', finalHue1);
+      document.documentElement.style.setProperty('--color2-hue', finalHue2);
+
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  </script>
+
+</body>
+</html>
